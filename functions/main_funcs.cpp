@@ -31,3 +31,14 @@ vector<float> SoftMax(const vector<float> Vector){
     }
     return result;
 }
+vector<float> tanh(const vector<float> Vector){
+    vector<float> result = Vector;
+    int i;
+    float ex, nex;
+    for(i = 0;i < result.size();i++){
+        ex = exp(result[i]);
+        nex = exp(-result[i]);
+        result[i] = (ex - nex) / (ex + nex);
+    }
+    return result;
+}

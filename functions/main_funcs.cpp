@@ -4,6 +4,7 @@
 using namespace std;
 
 vector<float> ReLU(const vector<float> Vector){
+    // Change negative numbers to 0
     vector<float> result = Vector;
     int i;
 
@@ -15,6 +16,7 @@ vector<float> ReLU(const vector<float> Vector){
     return result;
 }
 vector<float> SoftMax(const vector<float> Vector){
+    // 'Squeeze' the distributions between 0 and 1
     vector<float> result = Vector;
     int i;
     float sum = 0.0f;

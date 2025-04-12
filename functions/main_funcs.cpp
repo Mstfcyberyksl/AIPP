@@ -32,6 +32,7 @@ vector<float> SoftMax(const vector<float> Vector){
     return result;
 }
 vector<float> tanh(const vector<float> Vector){
+    // (e^x - e^-x) / (e^x + e^-x)
     vector<float> result = Vector;
     int i;
     float ex, nex;

@@ -43,3 +43,21 @@ vector<float> tanh(const vector<float> Vector){
     }
     return result;
 }
+vector<vector<float>> transpose(const vector<vector<float>> Matrix){
+    // Change rows to columns and columns to rows
+    // example: [[1,2,3],[4,5,6]] -> [[1,4],[2,5],[3,6]]
+    vector<vector<float>> result;
+    int i, j, rows, cols;
+    rows = Matrix.size();
+    cols = Matrix[0].size();
+    result.resize(cols);
+    for (i = 0;i < cols;i++){
+        result[i].resize(rows);
+    }
+    for (i = 0;i < rows;i++){
+        for (j = 0;j < cols;j++){
+            result[j][i] = Matrix[i][j];
+        }
+    }
+    return result;
+}

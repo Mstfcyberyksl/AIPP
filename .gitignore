@@ -1,0 +1,58 @@
+# Compiled object files
+*.o
+*.obj
+
+# Executable files
+*.exe
+*.out
+*.app
+*.hex
+
+# Libraries
+*.lib
+*.a
+*.la
+*.lo
+*.dll
+*.so
+*.so.*
+*.dylib
+
+# Debug and profiling
+*.dSYM/
+*.su
+*.idb
+*.pdb
+*.map
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Kernel modules
+*.ko
+*.mod*
+*.cmd
+.tmp_versions/
+modules.order
+Module.symvers
+Mkfile.old
+dkms.conf
+
+# Build system files
+build/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake-build-*/
+*.dir/
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*~
+
+# Shell scripts
+*.sh
+*.bash

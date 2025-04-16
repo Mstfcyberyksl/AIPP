@@ -61,3 +61,11 @@ vector<vector<float>> transpose(const vector<vector<float>> Matrix){
     }
     return result;
 }
+vector<float> sigmoid(const vector<float> Vector){
+    vector<float> result(Vector.size());
+    int i;
+    for(i = 0;i < Vector.size();i++){
+        result[i] = 1 / (1 + exp(-Vector[i]));
+    }
+    return result;
+}

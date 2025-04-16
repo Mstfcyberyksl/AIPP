@@ -1,6 +1,7 @@
 #include <vector>
 #include <cmath>
-
+#include <cstdlib>
+#include <stdexcept>
 using namespace std;
 
 vector<float> ReLU(const vector<float> Vector){
@@ -68,4 +69,20 @@ vector<float> sigmoid(const vector<float> Vector){
         result[i] = 1 / (1 + exp(-Vector[i]));
     }
     return result;
+}
+
+float mean_absolute_error(const vector<float> pred, const vector<float> actual){
+    float result = 0.0f;
+    int i, pred_size, act_size;
+    pred_size = pred.size();
+    act_size = actual.size();
+
+    if (pred_size != act_size){
+        throw runtime_error("SHAPE ERROR: The shape of the predictions and the shape of the real values don't match.");
+    }
+
+    for(i = 0;i < pred_size;i++){
+        result += abs(pred[i] - actual[i]);
+    }
+    return result / pred_size;
 }

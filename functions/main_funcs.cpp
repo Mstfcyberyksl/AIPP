@@ -86,3 +86,29 @@ float mean_absolute_error(const vector<float> pred, const vector<float> actual){
     }
     return result / pred_size;
 }
+
+int argmax(const vector<float>& Vector){
+    int i, result = 0;
+    float max = Vector[0];
+    for(i = 1;i < Vector.size();i++){
+        if (Vector[i] > max){
+            max = Vector[i];
+            result = i;
+        }
+    }
+    return result;
+}
+
+vector<vector<float>> matrix_mult(const vector<vector<float>>& Matrix1, const vector<vector<float>>& Matrix2){
+    int i, j, k;
+    vector<vector<float>> result(Matrix1.size(),vector<float>(Matrix2[0].size(),0.0f));
+
+    for(i = 0;i < Matrix1.size();i++){
+        for(j = 0;j < Matrix2[0].size();j++){
+            for(k = 0;k < Matrix1[0].size();k++){
+                result[i][j] += Matrix1[i][k] * Matrix2[k][j];
+            }
+        }
+    }
+    return result;
+}

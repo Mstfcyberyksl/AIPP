@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <stdexcept>
 #include <algorithm>
+#include <stdexcept>
 using namespace std;
 
 vector<float> ReLU(const vector<float> Vector){
@@ -86,6 +87,22 @@ float mean_absolute_error(const vector<float> pred, const vector<float> actual){
         result += abs(pred[i] - actual[i]);
     }
     return result / pred_size;
+}
+
+float mean_squared_error(const vector<float>& actual, const vector<float>& preds){
+    float result = 0, diff;
+    int i, size1, size2;
+    size1 = actual.size();
+    size2 = preds.size();
+
+    if (size1 == size2){
+        for (i = 0;i < actual.size();i++){
+            diff = actual[i] - preds[i];
+            result += diff * diff;
+        }
+        return result / size1;
+    }
+    throw runtime_error("SHAPE ERROR: The shape of the predictions and the shape of the real values don't match.");
 }
 
 int argmax(const vector<float>& Vector){

@@ -2,6 +2,7 @@
 #include <cmath>
 #include <cstdlib>
 #include <stdexcept>
+#include <algorithm>
 using namespace std;
 
 vector<float> ReLU(const vector<float> Vector){
@@ -109,6 +110,29 @@ vector<vector<float>> matrix_mult(const vector<vector<float>>& Matrix1, const ve
                 result[i][j] += Matrix1[i][k] * Matrix2[k][j];
             }
         }
+    }
+    return result;
+}
+
+
+// We may ask the user to enter the clamp size later on
+// TODO: Ask the user the clamp size and make the default 0.0001
+// TODO: Add error handling
+static float Cross_Entrophy_Loss_Helper(const vector<int>& actual, const vector<float>& preds){
+    float result = 0,pred;
+    int i;
+    for(i = 0;i < actual.size();i++){
+        pred = max(0.0001f, min(preds[i],1.0f - 0.0001f));
+        result += actual[i] * log(pred);
+    }
+    return -result;
+}
+
+vector<float> Cross_Entrophy_Loss(const vector<vector<int>>& actual, const vector<vector<float>>& preds){
+    vector<float> result(actual.size());
+    int i;
+    for(i = 0;i < actual.size();i++){
+        result[i] = Cross_Entrophy_Loss_Helper(actual[i], preds[i]);
     }
     return result;
 }

@@ -95,14 +95,15 @@ float mean_squared_error(const vector<float>& actual, const vector<float>& preds
     size1 = actual.size();
     size2 = preds.size();
 
-    if (size1 == size2){
-        for (i = 0;i < actual.size();i++){
-            diff = actual[i] - preds[i];
-            result += diff * diff;
-        }
-        return result / size1;
+    if (size1 != size2){
+        throw runtime_error("SHAPE ERROR: The shape of the predictions and the shape of the real values don't match.");
     }
-    throw runtime_error("SHAPE ERROR: The shape of the predictions and the shape of the real values don't match.");
+
+    for (i = 0;i < actual.size();i++){
+        diff = actual[i] - preds[i];
+        result += diff * diff;
+    }
+    return result / size1;
 }
 
 int argmax(const vector<float>& Vector){
@@ -118,8 +119,11 @@ int argmax(const vector<float>& Vector){
 }
 
 vector<vector<float>> matrix_mult(const vector<vector<float>>& Matrix1, const vector<vector<float>>& Matrix2){
-    int i, j, k;
-    vector<vector<float>> result(Matrix1.size(),vector<float>(Matrix2[0].size(),0.0f));
+    int i, j, k, size1_row, size1_col, size2_row, size2_col;
+    if (size1_col != size2_row){
+        throw runtime_error("SHAPE ERROR: The column size of first matrix doesn't match with the row size of the second matrix.");
+    }
+    vector<vector<float>> result(size1_row,vector<float>(size2_col,0.0f));
 
     for(i = 0;i < Matrix1.size();i++){
         for(j = 0;j < Matrix2[0].size();j++){
@@ -131,13 +135,17 @@ vector<vector<float>> matrix_mult(const vector<vector<float>>& Matrix1, const ve
     return result;
 }
 
-
 // We may ask the user to enter the clamp size later on
 // TODO: Ask the user the clamp size and make the default 0.0001
 // TODO: Add error handling
-static float Cross_Entrophy_Loss_Helper(const vector<int>& actual, const vector<float>& preds){
+static float Cross_Entropy_Loss_Helper(const vector<int>& actual, const vector<float>& preds){
     float result = 0,pred;
-    int i;
+    int i,size1,size2;
+    size1 = actual.size();
+    size2 = preds.size();
+    if(size1 != size2){
+        throw runtime_error("SHAPE ERROR: The shape of the predictions and the shape of the real values don't match.");
+    }
     for(i = 0;i < actual.size();i++){
         pred = max(0.0001f, min(preds[i],1.0f - 0.0001f));
         result += actual[i] * log(pred);
@@ -145,11 +153,31 @@ static float Cross_Entrophy_Loss_Helper(const vector<int>& actual, const vector<
     return -result;
 }
 
-vector<float> Cross_Entrophy_Loss(const vector<vector<int>>& actual, const vector<vector<float>>& preds){
+vector<float> Cross_Entropy_Loss(const vector<vector<int>>& actual, const vector<vector<float>>& preds){
+    int i, size1, size2;
+    size1 = actual.size();
+    size2 = preds.size();
+    if (size1 != size2){
+        throw runtime_error("SHAPE ERROR: The shape of the predictions and the shape of the real values don't match.");
+    }
     vector<float> result(actual.size());
-    int i;
     for(i = 0;i < actual.size();i++){
-        result[i] = Cross_Entrophy_Loss_Helper(actual[i], preds[i]);
+        result[i] = Cross_Entropy_Loss_Helper(actual[i], preds[i]);
     }
     return result;
+}
+
+vector<float> Hinge_Loss(const vector<float>& real,const vector<float>& preds){
+    int i, size1, size2;
+    size1 = real.size();
+    size2 = preds.size();
+    if (size1 != size2){
+        throw runtime_error("SHAPE ERROR: The shape of the predictions and the shape of the real values don't match.");
+    }
+    vector<float> result(size1);
+    for(i = 0;i < size1;i++){
+        result[i] = max(0.0f, 1.0f - real[i] * preds[i]);
+    }
+    return result;
+
 }
